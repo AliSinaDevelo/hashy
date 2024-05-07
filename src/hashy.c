@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "hashTable.h"
+#include "hashy.h"
 
 // new_item() initializes a new hash table item
 static item* new_item (const char* k, const char* v) {
@@ -27,8 +27,8 @@ static void delete_item (item* i) {
     free(i);
 }
 
-// delete_hash_table() delets and frees the memory allocated to a hash table
-void delete_hash_table (hash_table* t) {
+// delete() delets and frees the memory allocated to a hash table
+void delete (hash_table* t) {
     int i;
     for (i = 0; i < t->size; i++) {
 	item* it = t->items[i];
