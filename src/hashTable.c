@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "hashTable.h"
 
 // new_item() initializes a new hash table item
@@ -36,4 +37,15 @@ void delete_hash_table (hash_table* t) {
     }
     free(t->items);
     free(t);
+}
+
+// hash() function takes a string as an input and returns a number in our bucket array length
+static int hash (const char* str, const int a, const int z) {
+    long hash = 0;
+    const int len_str = strlen(str);
+    for (int i = 0; i < len_str; i++) {
+	hash += (long) pow(a, len_str - (i + 1)) * s[i];
+	hash = hash % m;
+    }
+    return (int) hash;
 }
