@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "hashTable.h"
 
 // new_item() initializes a new hash table item
