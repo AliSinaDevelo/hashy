@@ -63,7 +63,7 @@ void insert (hash_table* t, const char* key, const char* value) {
     int index = get_hash(it->key, h->size, 0);
     item* current_it = h->items[index];
     int f = 1;
-    while(current_item != NULL) {
+    while(current_item != NULL && current_item != &DELETED_ITEM) {
 	index = get_hash(it->key, h->size, f);
 	current_item = h->items[index];
 	f++;
@@ -78,8 +78,10 @@ char* search (hash_table* t, const char* key) {
     item* it = h->items[index];
     int f = 1;
     while (it != NULL) {
-	if (strcmp(it->key, key) == 0)
-	    return it->value;
+	if (it != &DELETED_ITEM) {
+	    if (strcmp(it->key, key) == 0)
+		return it->value;
+	}
 	index = get_hash(key, h->size, f);
 	it = h->items[index];
 	f++;
