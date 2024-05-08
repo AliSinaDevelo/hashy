@@ -49,3 +49,10 @@ static int hash (const char* str, const int a, const int z) {
     }
     return (int) hash;
 }
+
+// get_hash() is used in handling collisions using open addressing with double hashing
+static int get_hash (const char* str, const int n_buckets, const int attemp) {
+    const int a = hash(str, PRIME_1, n_buckets);
+    const int b = hash(str, PRIME_2, n_buckets);
+    return (a + (attempt * (b + 1))) % n_buckets;
+}
