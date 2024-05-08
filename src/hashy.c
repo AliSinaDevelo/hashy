@@ -56,3 +56,57 @@ static int get_hash (const char* str, const int n_buckets, const int attemp) {
     const int b = hash(str, PRIME_2, n_buckets);
     return (a + (attempt * (b + 1))) % n_buckets;
 }
+
+// insert() iterates through indexes until we find an empty buket, then inserts the item into the bucket and increments count
+void insert (hash_table* t, const char* key, const char* value) {
+    item* it = new_item(key, value);
+    int index = get_hash(it->key, h->size, 0);
+    item* current_it = h->items[index];
+    int f = 1;
+    while(current_item != NULL) {
+	index = get_hash(it->key, h->size, f);
+	current_item = h->items[index];
+	f++;
+    }
+    h->items[index] = it;
+    h->count++;
+}
+
+// search() at the iteration checks if the key matches key we are looking for, and if so returns the value
+char* search (hash_table* t, const char* key) {
+    int index = get_hash(key, h->size, 0);
+    item* it = h->items[index];
+    int f = 1;
+    while (it != NULL) {
+	if (strcmp(it->key, key) == 0)
+	    return it->value;
+	index = get_hash(key, h->size, f);
+	it = h->items[index];
+	f++;
+    }
+    return NULL;
+}
+
+// table_delete() deletes from an open addressed hash table
+static item DELETED_ITEM = {
+    NULL,
+    NULL
+};
+
+void table_delete (hash_table* t, const char* key) {
+    int index = get_hash (key, t->size, 0);
+    item* it = h->items[index];
+    int f = 1;
+    while (it != NULL) {
+	if (it != &DELETED_ITEM) {
+	    if (strcmp(it->key, key) == 0) {
+		delete_item(it);
+		h->items[index] = &DELETED_ITEM;
+	    }
+	}
+	index = get_hash (key, h->size, f);
+	it = h->items[index];
+	f++;
+    }
+    h->count--;
+}
